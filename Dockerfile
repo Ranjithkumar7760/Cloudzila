@@ -10,8 +10,13 @@ WORKDIR /app
 # Copy the application code to the container
 COPY . /app
 
+# Install system dependencies for building Python packages
+RUN apt-get update && apt-get install -y build-essential python3-dev
+
+# Upgrade pip, setuptools, and install wheel
+RUN pip install --upgrade pip setuptools wheel
+
 # Install dependencies
-RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Expose port 8000 for the Gunicorn server
